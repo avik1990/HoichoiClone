@@ -14,6 +14,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.hoichoiclone.R
 import com.app.hoichoiclone.databinding.FragmentHomeBinding
+import com.app.hoichoiclone.screens.home.modules.all.FragmentAll
+import com.app.hoichoiclone.screens.home.modules.movies.MovieFragment
+import com.app.hoichoiclone.screens.home.modules.shows.ShowsFragment
+import com.app.hoichoiclone.screens.home.modules.watchlist.WatchlistFragment
+import com.app.hoichoiclone.utility.Utils.addChildFragment
 import com.app.hoichoiclone.utility.customviews.tabs.NavigationOption
 import com.app.hoichoiclone.utility.customviews.tabs.TabAdapter
 
@@ -23,8 +28,6 @@ class HomeFragment : Fragment(), TabAdapter.Interaction {
     private val binding get() = _binding!!
     private lateinit var adapter: TabAdapter
     private var previousSelect = 0
-    lateinit var graph : NavGraph
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,32 +47,12 @@ class HomeFragment : Fragment(), TabAdapter.Interaction {
         initRecyclerView(requireContext(),"Home")
         ///
 
-        val navHostFragment = childFragmentManager.findFragmentById(R.id.nav_host_fragment) as? NavHostFragment
-        navHostFragment?.let { hostFragment ->
-            val navHostFragmentController = hostFragment.navController
-
-            val navInflater = navHostFragmentController.navInflater
-            graph = navInflater.inflate(R.navigation.mobile_navigation)
-
-        navHostFragmentController.graph = startFragmentBasedOnProfile(graph,0)
-        }
+        ///load the initial fragment
+        val fieldFragment = FragmentAll()
+        addChildFragment(fieldFragment, R.id.nav_host_fragment)
+        ///////////////
 
         return root
-    }
-
-
-    private fun startFragmentBasedOnProfile(graph: NavGraph,position: Int): NavGraph {
-        if(position==0) {
-            graph.setStartDestination(R.id.allFragment)
-        }else if(position==1){
-            graph.setStartDestination(R.id.movieFragment)
-        }else if(position==2){
-            graph.setStartDestination(R.id.showFragment)
-        }else if(position==3){
-            graph.setStartDestination(R.id.watchFragment)
-        }
-
-        return graph
     }
 
 
@@ -91,8 +74,29 @@ class HomeFragment : Fragment(), TabAdapter.Interaction {
             adapter.notifyItemChanged(position)
             adapter.notifyItemChanged(previousSelect)
 
-            startFragmentBasedOnProfile(graph,position)
+            //load fragment according to tab click
+            when (position) {
+                0 -> {
+                    val fieldFragment = FragmentAll()
+                    addChildFragment(fieldFragment, R.id.nav_host_fragment)
+                }
+                1 -> {
+                    val fieldFragment = MovieFragment()
+                    addChildFragment(fieldFragment, R.id.nav_host_fragment)
+                }
+                2 -> {
+                    val fieldFragment = ShowsFragment()
+                    addChildFragment(fieldFragment, R.id.nav_host_fragment)
+                }
+                3 -> {
+                    val fieldFragment = WatchlistFragment()
+                    addChildFragment(fieldFragment, R.id.nav_host_fragment)
+                }
+            }
         }
         previousSelect = position
     }
+
+
+
 }

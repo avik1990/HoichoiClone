@@ -6,9 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".screens.home.HomeFragment">
 
-    <fragment
+    <RelativeLayout
         android:id="@+id/nav_host_fragment"
-        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -23,7 +22,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_50sdp"
+        android:layout_height="@dimen/_35sdp"
         android:background="#4D000000"
         android:layout_gravity="top"
         app:layout_constraintEnd_toEndOf="parent"
