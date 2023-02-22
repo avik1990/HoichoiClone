@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.app.hoichoiclone.R
 import com.app.hoichoiclone.databinding.CustomTabLayoutBinding
 
-class TabAdapter (private val context: Context, private val interaction: Interaction) :
+class TabAdapter(private val context: Context, private val interaction: Interaction) :
     RecyclerView.Adapter<TabAdapter.NavigationOptionViewHolder>() {
 
     var currentItemSelected: Int = 0
@@ -42,7 +42,10 @@ class TabAdapter (private val context: Context, private val interaction: Interac
         fun onItemSelected(position: Int, item: NavigationOption)
     }
 
-    class NavigationOptionViewHolder (val itemDataBindingUtil: CustomTabLayoutBinding, val interaction: Interaction) :
+    class NavigationOptionViewHolder(
+        val itemDataBindingUtil: CustomTabLayoutBinding,
+        val interaction: Interaction
+    ) :
         RecyclerView.ViewHolder(itemDataBindingUtil.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NavigationOptionViewHolder {
@@ -73,11 +76,10 @@ class TabAdapter (private val context: Context, private val interaction: Interac
         holder.itemDataBindingUtil.position = position
         holder.itemDataBindingUtil.checked = (currentItemSelected == position)
 
-        if(currentItemSelected == position) {
-            holder.itemDataBindingUtil.selectedView.visibility= View.VISIBLE
-        }else {
-            holder.itemDataBindingUtil.selectedView.visibility= View.INVISIBLE
+        if (currentItemSelected == position) {
+            holder.itemDataBindingUtil.selectedView.visibility = View.VISIBLE
+        } else {
+            holder.itemDataBindingUtil.selectedView.visibility = View.INVISIBLE
         }
-
     }
 }

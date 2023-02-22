@@ -3,22 +3,20 @@ package com.app.hoichoiclone.utility.customviews.tabs
 import android.content.Context
 import com.app.hoichoiclone.R
 
-class NavigationOption (val id: Int, val fragment: Int, val text: String) {
+class NavigationOption(val id: Int, val fragment: Int, val text: String) {
 
     companion object {
 
         fun initNavigationOptions(context: Context, page: String): List<NavigationOption> {
             val temp = arrayListOf<NavigationOption>()
             temp.clear()
-                if(page.equals("Home")){
-                    temp.add(NavigationOption(id = 1, fragment = R.id.allFragment, text = context.resources.getString(R.string.all)))
-                    temp.add(NavigationOption(id = 2, fragment = R.id.movieFragment, text = context.resources.getString(R.string.movies)))
-                    temp.add(NavigationOption(id = 3, fragment = R.id.showFragment, text = context.resources.getString(R.string.shows)))
-                    temp.add(NavigationOption(id = 4,  fragment = R.id.watchFragment, text = context.resources.getString(R.string.watchlist)))
-                }
+            if (page.equals("Home")) {
+                temp.add(NavigationOption(id = 1, fragment = R.id.allFragment, text = context.resources.getString(R.string.all)))
+                temp.add(NavigationOption(id = 2, fragment = R.id.movieFragment, text = context.resources.getString(R.string.movies)))
+                temp.add(NavigationOption(id = 3, fragment = R.id.showFragment, text = context.resources.getString(R.string.shows)))
+                temp.add(NavigationOption(id = 4, fragment = R.id.watchFragment, text = context.resources.getString(R.string.watchlist)))
+            }
             return temp
         }
-
     }
-
 }
