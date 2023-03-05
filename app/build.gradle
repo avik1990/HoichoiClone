@@ -77,7 +77,7 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$daggerHiltVersion"
     kapt "com.google.dagger:hilt-android-compiler:$daggerHiltVersion"
     ////
-    def coilVersion = '1.2.2'
+    def coilVersion = '2.2.2'
     implementation "io.coil-kt:coil:$coilVersion"
     //
     //Retrofit
@@ -87,4 +87,7 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:4.9.1"
     implementation "com.squareup.retrofit2:converter-scalars:$retrofitVersion"
     ///
+
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+
 }
