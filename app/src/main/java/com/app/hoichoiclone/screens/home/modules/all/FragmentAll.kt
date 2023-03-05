@@ -1,6 +1,7 @@
 package com.app.hoichoiclone.screens.home.modules.all
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.app.hoichoiclone.databinding.FragmentAllBinding
+import com.app.hoichoiclone.screens.home.modules.all.adapter.MovieAdapter
 import com.app.hoichoiclone.screens.home.modules.all.adapter.PagerAdapter
 import com.app.hoichoiclone.screens.home.modules.all.model.Detail
 import com.app.hoichoiclone.screens.home.modules.all.model.MoviesDataModel
@@ -17,7 +19,7 @@ import java.io.BufferedReader
 import java.io.InputStream
 import java.io.InputStreamReader
 
-class FragmentAll : Fragment(), PagerAdapter.Interaction {
+class FragmentAll : Fragment(), PagerAdapter.Interaction, MovieAdapter.Interaction {
 
     companion object {
         fun newInstance() = FragmentAll()
@@ -26,8 +28,11 @@ class FragmentAll : Fragment(), PagerAdapter.Interaction {
     private lateinit var viewModel: FragmentAllViewModel
     private lateinit var _binding: FragmentAllBinding
     private lateinit var adapter: PagerAdapter
-    var listDetail: MutableList<Detail> = ArrayList()
+    private lateinit var contentadapter: MovieAdapter
 
+    var listPagerData: MutableList<Detail> = ArrayList()
+    var listContentData: MutableMap<String,List<Detail>> = HashMap()
+    var listSubcategoryData: MutableList<Detail> = ArrayList()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,15 +45,46 @@ class FragmentAll : Fragment(), PagerAdapter.Interaction {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this)[FragmentAllViewModel::class.java]
+
         val gson = Gson()
         val i: InputStream = requireActivity().assets.open("movies.json")
         val br = BufferedReader(InputStreamReader(i))
         val dataList: MoviesDataModel = gson.fromJson(br, MoviesDataModel::class.java)
 
-        listDetail.clear()
+        prepareSliderData(dataList)
+        prepareMovieContentData(dataList)
+    }
+
+    private fun prepareMovieContentData(dataList: MoviesDataModel) {
+        listContentData.clear()
+        listSubcategoryData.clear()
+
+        dataList.result.forEachIndexed { index, result ->
+            result.details.forEach {
+                listSubcategoryData.add(it)
+            }
+            listContentData[result.title] = listSubcategoryData
+        }
+
+        for ((key, value) in listContentData) {
+            Log.e("PrintValues1",key)
+            for (i in value.indices) {
+             Log.e("PrintValues2",value[i].id.toString())
+            }
+        }
+
+        contentadapter = MovieAdapter(requireContext(), this)
+        _binding.contentList.adapter = contentadapter
+        _binding.contentList.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        contentadapter.submitList(dataList.result, listContentData)
+        contentadapter.notifyDataSetChanged()
+    }
+
+    private fun prepareSliderData(dataList: MoviesDataModel) {
+        listPagerData.clear()
         for (i in 0 until dataList.result.count()) {
             for (j in 0 until dataList.result[i].details.size) {
-                listDetail.add(dataList.result[i].details[j])
+                listPagerData.add(dataList.result[i].details[j])
             }
         }
 
@@ -56,8 +92,7 @@ class FragmentAll : Fragment(), PagerAdapter.Interaction {
         _binding.movieListSlider.adapter = adapter
         _binding.movieListSlider.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         PagerSnapHelper().attachToRecyclerView(_binding.movieListSlider)
-
-        adapter.submitList(listDetail)
+        adapter.submitList(listPagerData)
         adapter.notifyDataSetChanged()
     }
 

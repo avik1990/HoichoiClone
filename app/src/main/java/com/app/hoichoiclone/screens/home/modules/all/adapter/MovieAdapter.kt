@@ -2,68 +2,89 @@ package com.app.hoichoiclone.screens.home.modules.all.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.AsyncListDiffer
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.app.hoichoiclone.R
+import com.app.hoichoiclone.databinding.RowMovielistBinding
+import com.app.hoichoiclone.screens.home.modules.all.model.Detail
+import com.app.hoichoiclone.screens.home.modules.all.model.Result
 
-class MovieAdapter(
-    context: Context,
-    list: ArrayList<com.app.hoichoiclone.screens.home.modules.all.model.Result>
-) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MovieAdapter(private val context: Context, private val interaction: Interaction) :
+    RecyclerView.Adapter<MovieAdapter.NavigationOptionViewHolder>() {
 
-    companion object {
-        const val VIEW_TYPE_ONE = 1
-        const val VIEW_TYPE_TWO = 2
-    }
+    var currentItemSelected: Int = 0
 
-    private val context: Context = context
-    var list: ArrayList<com.app.hoichoiclone.screens.home.modules.all.model.Result> = list
+    private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Result>() {
 
-    private inner class View1ViewHolder(itemView: View) :
-        RecyclerView.ViewHolder(itemView) {
-        var message: TextView = itemView.findViewById(R.id.textView)
-        fun bind(position: Int) {
-            val recyclerViewModel = list[position]
-            message.text = recyclerViewModel.title
+        override fun areItemsTheSame(
+            oldItem: Result,
+            newItem: Result
+        ): Boolean {
+            return oldItem.id == newItem.id
+        }
+
+        override fun areContentsTheSame(
+            oldItem: Result,
+            newItem: Result
+        ): Boolean {
+            return oldItem.equals(newItem)
         }
     }
 
-    private inner class View2ViewHolder(itemView: View) :
-        RecyclerView.ViewHolder(itemView) {
-        var message: TextView = itemView.findViewById(R.id.textView)
-        fun bind(position: Int) {
-            val recyclerViewModel = list[position]
-            message.text = recyclerViewModel.details[0].name
-        }
+    private val differ = AsyncListDiffer(this, DIFF_CALLBACK)
+
+    /**
+     * Interface for any kind of listener event in recyclerView
+     * */
+    interface Interaction {
+        fun onItemSelected(position: Int, item: Detail)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        if (viewType == VIEW_TYPE_ONE) {
-            return View1ViewHolder(
-                LayoutInflater.from(context).inflate(R.layout.item_view_1, parent, false)
-            )
-        }
-        return View2ViewHolder(
-            LayoutInflater.from(context).inflate(R.layout.item_view_2, parent, false)
+    class NavigationOptionViewHolder(
+        val itemDataBindingUtil: RowMovielistBinding,
+        val interaction: Interaction
+    ) :
+        RecyclerView.ViewHolder(itemDataBindingUtil.root)
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NavigationOptionViewHolder {
+        val itemDatabinding = DataBindingUtil.inflate<RowMovielistBinding>(LayoutInflater.from(parent.context), R.layout.row_movielist, parent, false)
+        return NavigationOptionViewHolder(
+            itemDatabinding,
+            interaction
         )
     }
 
     override fun getItemCount(): Int {
-        return list.size
+        return differ.currentList.size
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-       /* if (list[position].viewType === VIEW_TYPE_ONE) {
-            (holder as View1ViewHolder).bind(position)
-        } else {
-            (holder as View2ViewHolder).bind(position)
+    fun submitList(list: List<Result>, listContentData: MutableMap<String, List<Detail>>) {
+        differ.submitList(list)
+    }
+
+    override fun onBindViewHolder(holder: NavigationOptionViewHolder, position: Int) {
+        val item = differ.currentList[position]
+        /**
+         * Assigning the variables in to data binding variables for showing the data
+         * */
+        holder.itemDataBindingUtil.navigationItem = item
+        holder.itemDataBindingUtil.clickEvent = interaction
+        holder.itemDataBindingUtil.position = position
+        holder.itemDataBindingUtil.checked = (currentItemSelected == position)
+        //val url = "https://www.themoviedb.org/t/p/w500" + item?.poster_path
+        //Log.e("poster_path", url)
+       /* Glide.with(context)
+            .load(url)
+            .into(holder.itemDataBindingUtil.imgBanner!!)*/
+        /*holder.itemDataBindingUtil.imgBanner.load(url) {
+            // crossfade(750)
+            // placeholder(errorPlaceHolder)
+            // transformations(CircleCropTransformation())
+            // error(errorPlaceHolder)
+            scale(Scale.FILL)
         }*/
     }
-
-    /*override fun getItemViewType(position: Int): Int {
-        return list[position].viewType
-    }*/
 }
