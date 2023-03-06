@@ -6,26 +6,6 @@
       "details": [
         {
           "adult": false,
-          "backdrop_path": "/c1bz69r0v065TGFA5nqBiKzPDys.jpg",
-          "genre_ids": [
-            35,
-            10751,
-            10402
-          ],
-          "id": 830784,
-          "original_language": "en",
-          "original_title": "Lyle, Lyle, Crocodile",
-          "overview": "When the Primm family moves to New York City, their young son Josh struggles to adapt to his new school and new friends. All of that changes when he discovers Lyle — a singing crocodile who loves baths, caviar and great music — living in the attic of his new home. But when Lyle’s existence is threatened by evil neighbor Mr. Grumps, the Primms must band together to show the world that family can come from the most unexpected places.",
-          "popularity": 1710.176,
-          "poster_path": "/irIS5Tn3TXjNi1R9BpWvGAN4CZ1.jpg",
-          "release_date": "2022-10-07",
-          "title": "Lyle, Lyle, Crocodile",
-          "video": false,
-          "vote_average": 7.8,
-          "vote_count": 122
-        },
-        {
-          "adult": false,
           "backdrop_path": "/tUBN1paMQ1tmVA5Sjy1ZjPWVsiF.jpg",
           "genre_ids": [
             12,

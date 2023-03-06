@@ -29,9 +29,10 @@ class FragmentAll : Fragment(), PagerAdapter.Interaction, MovieAdapter.Interacti
     private lateinit var _binding: FragmentAllBinding
     private lateinit var adapter: PagerAdapter
     private lateinit var contentadapter: MovieAdapter
+    // private lateinit var subContentadapter: SubCategoryMovieAdapter
 
     var listPagerData: MutableList<Detail> = ArrayList()
-    var listContentData: MutableMap<String,List<Detail>> = HashMap()
+    var listContentData: MutableMap<String, List<Detail>> = HashMap()
     var listSubcategoryData: MutableList<Detail> = ArrayList()
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,24 +60,33 @@ class FragmentAll : Fragment(), PagerAdapter.Interaction, MovieAdapter.Interacti
         listContentData.clear()
         listSubcategoryData.clear()
 
-        dataList.result.forEachIndexed { index, result ->
+        /*dataList.result.forEachIndexed { index, result ->
+            listSubcategoryData.clear()
             result.details.forEach {
-                listSubcategoryData.add(it)
+                 listSubcategoryData.add(it)
+                 //Log.e("titltttt2",result.title)
+                Log.e("titlttt4444",listSubcategoryData.size.toString())
             }
             listContentData[result.title] = listSubcategoryData
+            //Log.e("titltttt",result.title)
+            Log.e("titltttt33333",listSubcategoryData.size.toString())
         }
+
+        Log.e("sdfsdfsdf", listContentData["Upcoming Movies"]!!.size.toString())
 
         for ((key, value) in listContentData) {
             Log.e("PrintValues1",key)
             for (i in value.indices) {
-             Log.e("PrintValues2",value[i].id.toString())
+             Log.e("PrintValues2",value[i].toString())
             }
-        }
+        }*/
+
+        // subContentadapter  = SubCategoryMovieAdapter(requireContext(), this)
 
         contentadapter = MovieAdapter(requireContext(), this)
         _binding.contentList.adapter = contentadapter
         _binding.contentList.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        contentadapter.submitList(dataList.result, listContentData)
+        contentadapter.submitList(dataList.result)
         contentadapter.notifyDataSetChanged()
     }
 
@@ -87,7 +97,7 @@ class FragmentAll : Fragment(), PagerAdapter.Interaction, MovieAdapter.Interacti
                 listPagerData.add(dataList.result[i].details[j])
             }
         }
-
+        Log.e("DATAsdasd32", listPagerData.size.toString())
         adapter = PagerAdapter(requireContext(), this)
         _binding.movieListSlider.adapter = adapter
         _binding.movieListSlider.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
