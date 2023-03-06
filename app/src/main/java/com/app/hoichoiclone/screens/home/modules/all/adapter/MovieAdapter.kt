@@ -1,33 +1,37 @@
-package com.app.hoichoiclone.utility.customviews.tabs
+package com.app.hoichoiclone.screens.home.modules.all.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.RecycledViewPool
 import com.app.hoichoiclone.R
-import com.app.hoichoiclone.databinding.CustomTabLayoutBinding
+import com.app.hoichoiclone.databinding.RowMovielistHeaderBinding
+import com.app.hoichoiclone.screens.home.modules.all.model.Detail
+import com.app.hoichoiclone.screens.home.modules.all.model.Result
 
-class TabAdapter(private val context: Context, private val interaction: Interaction) :
-    RecyclerView.Adapter<TabAdapter.NavigationOptionViewHolder>() {
+class MovieAdapter(private val context: Context, private val interaction: Interaction) :
+    RecyclerView.Adapter<MovieAdapter.NavigationOptionViewHolder>() {
 
     var currentItemSelected: Int = 0
+    private val viewPool = RecycledViewPool()
 
-    private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<NavigationOption>() {
+    private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Result>() {
 
         override fun areItemsTheSame(
-            oldItem: NavigationOption,
-            newItem: NavigationOption
+            oldItem: Result,
+            newItem: Result
         ): Boolean {
             return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(
-            oldItem: NavigationOption,
-            newItem: NavigationOption
+            oldItem: Result,
+            newItem: Result
         ): Boolean {
             return oldItem.equals(newItem)
         }
@@ -39,19 +43,17 @@ class TabAdapter(private val context: Context, private val interaction: Interact
      * Interface for any kind of listener event in recyclerView
      * */
     interface Interaction {
-        fun onItemSelected(position: Int, item: NavigationOption)
+        fun onItemSelected(position: Int, item: Detail)
     }
 
     class NavigationOptionViewHolder(
-        val itemDataBindingUtil: CustomTabLayoutBinding,
+        val itemDataBindingUtil: RowMovielistHeaderBinding,
         val interaction: Interaction
     ) :
         RecyclerView.ViewHolder(itemDataBindingUtil.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NavigationOptionViewHolder {
-
-        val itemDatabinding = DataBindingUtil.inflate<CustomTabLayoutBinding>(LayoutInflater.from(parent.context), R.layout.custom_tab_layout, parent, false)
-
+        val itemDatabinding = DataBindingUtil.inflate<RowMovielistHeaderBinding>(LayoutInflater.from(parent.context), R.layout.row_movielist_header, parent, false)
         return NavigationOptionViewHolder(
             itemDatabinding,
             interaction
@@ -62,24 +64,22 @@ class TabAdapter(private val context: Context, private val interaction: Interact
         return differ.currentList.size
     }
 
-    fun submitList(list: List<NavigationOption>) {
+    fun submitList(list: List<Result>) {
         differ.submitList(list)
     }
 
     override fun onBindViewHolder(holder: NavigationOptionViewHolder, position: Int) {
         val item = differ.currentList[position]
-        /**
-         * Assigning the variables in to data binding variables for showing the data
-         * */
+
         holder.itemDataBindingUtil.navigationItem = item
         holder.itemDataBindingUtil.clickEvent = interaction
         holder.itemDataBindingUtil.position = position
         holder.itemDataBindingUtil.checked = (currentItemSelected == position)
 
-        if (currentItemSelected == position) {
-            holder.itemDataBindingUtil.selectedView.visibility = View.VISIBLE
-        } else {
-            holder.itemDataBindingUtil.selectedView.visibility = View.INVISIBLE
+        holder.itemDataBindingUtil.listSubCatItem.apply {
+            layoutManager = LinearLayoutManager(holder.itemDataBindingUtil.listSubCatItem.context, LinearLayoutManager.HORIZONTAL, false)
+            adapter = ChildAdapter(item.details)
+            holder.itemDataBindingUtil.listSubCatItem.setRecycledViewPool(viewPool)
         }
     }
 }

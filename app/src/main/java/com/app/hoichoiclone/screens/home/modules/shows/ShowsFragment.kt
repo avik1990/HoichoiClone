@@ -1,11 +1,11 @@
 package com.app.hoichoiclone.screens.home.modules.shows
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.app.hoichoiclone.R
 
 class ShowsFragment : Fragment() {
@@ -17,7 +17,8 @@ class ShowsFragment : Fragment() {
     private lateinit var viewModel: ShowsViewModel
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_shows, container, false)
@@ -28,5 +29,4 @@ class ShowsFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(ShowsViewModel::class.java)
         // TODO: Use the ViewModel
     }
-
 }

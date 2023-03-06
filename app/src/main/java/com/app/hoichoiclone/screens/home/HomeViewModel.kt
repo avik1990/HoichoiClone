@@ -14,7 +14,6 @@ class HomeViewModel : ViewModel() {
     }
     val text: LiveData<String> = _text
 
-
     fun getTabsData(): LiveData<MutableList<String>> {
         _pictureListLive.value = tabs
         return _pictureListLive

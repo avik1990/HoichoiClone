@@ -7,10 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavController
-import androidx.navigation.NavGraph
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.hoichoiclone.R
 import com.app.hoichoiclone.databinding.FragmentHomeBinding
@@ -43,22 +39,21 @@ class HomeFragment : Fragment(), TabAdapter.Interaction {
         // tabs
         adapter = TabAdapter(requireContext(), this)
         _binding?.navigationRecyclerView?.adapter = adapter
-        _binding?.navigationRecyclerView?.layoutManager = LinearLayoutManager(requireContext(),LinearLayoutManager.HORIZONTAL,false)
-        initRecyclerView(requireContext(),"Home")
-        ///
+        _binding?.navigationRecyclerView?.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        initRecyclerView(requireContext(), "Home")
+        // /
 
-        ///load the initial fragment
+        // /load the initial fragment
         val fieldFragment = FragmentAll()
         addChildFragment(fieldFragment, R.id.nav_host_fragment)
-        ///////////////
+        // /////////////
 
         return root
     }
 
-
     private fun initRecyclerView(context: Context, page: String) {
-        val navigationOptions = NavigationOption.initNavigationOptions(context,page)
-      //  mBinding?.appBarMain?.screenText?.text = if (isInitialy) "" else navigationOptions.first().text
+        val navigationOptions = NavigationOption.initNavigationOptions(context, page)
+        //  mBinding?.appBarMain?.screenText?.text = if (isInitialy) "" else navigationOptions.first().text
         adapter.submitList(navigationOptions)
         adapter.notifyDataSetChanged()
     }
@@ -74,7 +69,7 @@ class HomeFragment : Fragment(), TabAdapter.Interaction {
             adapter.notifyItemChanged(position)
             adapter.notifyItemChanged(previousSelect)
 
-            //load fragment according to tab click
+            // load fragment according to tab click
             when (position) {
                 0 -> {
                     val fieldFragment = FragmentAll()
@@ -96,7 +91,4 @@ class HomeFragment : Fragment(), TabAdapter.Interaction {
         }
         previousSelect = position
     }
-
-
-
 }
