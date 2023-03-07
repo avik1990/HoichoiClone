@@ -13,6 +13,5 @@
     <string name="movies">Movies</string>
     <string name="shows">Shows</string>
     <string name="watchlist">Watchlist</string>
-
-
+    <string name="detail">Detail</string>
 </resources>

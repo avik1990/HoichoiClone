@@ -15,7 +15,7 @@ import com.app.hoichoiclone.screens.home.modules.all.model.Detail
 import com.app.hoichoiclone.screens.home.modules.all.model.Result
 
 class MovieAdapter(private val context: Context, private val interaction: Interaction) :
-    RecyclerView.Adapter<MovieAdapter.NavigationOptionViewHolder>() {
+    RecyclerView.Adapter<MovieAdapter.NavigationOptionViewHolder>(), ChildAdapter.Interaction {
 
     var currentItemSelected: Int = 0
     private val viewPool = RecycledViewPool()
@@ -43,7 +43,7 @@ class MovieAdapter(private val context: Context, private val interaction: Intera
      * Interface for any kind of listener event in recyclerView
      * */
     interface Interaction {
-        fun onItemSelected(position: Int, item: Detail)
+        fun onItemSelectedHorizontal(position: Int, item: Detail)
     }
 
     class NavigationOptionViewHolder(
@@ -78,8 +78,12 @@ class MovieAdapter(private val context: Context, private val interaction: Intera
 
         holder.itemDataBindingUtil.listSubCatItem.apply {
             layoutManager = LinearLayoutManager(holder.itemDataBindingUtil.listSubCatItem.context, LinearLayoutManager.HORIZONTAL, false)
-            adapter = ChildAdapter(item.details)
+            adapter = ChildAdapter(item.details, this@MovieAdapter)
             holder.itemDataBindingUtil.listSubCatItem.setRecycledViewPool(viewPool)
         }
+    }
+
+    override fun onItemSelected(position: Int, item: Detail) {
+        interaction.onItemSelectedHorizontal(position, item)
     }
 }

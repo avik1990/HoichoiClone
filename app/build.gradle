@@ -53,7 +53,6 @@ ktlint {
 }
 
 dependencies {
-
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.6.0'
     implementation 'com.google.android.material:material:1.8.0'
@@ -65,9 +64,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui-ktx:2.3.4'
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    //testImplementation 'junit:junit:4.13.2'
-    //androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    //androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
     //sdp library
     implementation 'com.intuit.sdp:sdp-android:1.1.0'
     //pull to refresh
@@ -80,6 +77,7 @@ dependencies {
     def coilVersion = '2.2.2'
     implementation "io.coil-kt:coil:$coilVersion"
     //
+
     //Retrofit
     def retrofitVersion = "2.9.0"
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
@@ -88,6 +86,9 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-scalars:$retrofitVersion"
     ///
 
-    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    ////
+    def exoplayer_version = "2.18.4"
+    implementation "com.google.android.exoplayer:exoplayer:$exoplayer_version"
+    ///
 
 }

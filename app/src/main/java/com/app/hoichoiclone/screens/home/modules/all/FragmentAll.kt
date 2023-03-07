@@ -1,14 +1,16 @@
 package com.app.hoichoiclone.screens.home.modules.all
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
+import com.app.hoichoiclone.R
 import com.app.hoichoiclone.databinding.FragmentAllBinding
 import com.app.hoichoiclone.screens.home.modules.all.adapter.MovieAdapter
 import com.app.hoichoiclone.screens.home.modules.all.adapter.PagerAdapter
@@ -29,11 +31,10 @@ class FragmentAll : Fragment(), PagerAdapter.Interaction, MovieAdapter.Interacti
     private lateinit var _binding: FragmentAllBinding
     private lateinit var adapter: PagerAdapter
     private lateinit var contentadapter: MovieAdapter
-    // private lateinit var subContentadapter: SubCategoryMovieAdapter
 
     var listPagerData: MutableList<Detail> = ArrayList()
     var listContentData: MutableMap<String, List<Detail>> = HashMap()
-    var listSubcategoryData: MutableList<Detail> = ArrayList()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -58,30 +59,6 @@ class FragmentAll : Fragment(), PagerAdapter.Interaction, MovieAdapter.Interacti
 
     private fun prepareMovieContentData(dataList: MoviesDataModel) {
         listContentData.clear()
-        listSubcategoryData.clear()
-
-        /*dataList.result.forEachIndexed { index, result ->
-            listSubcategoryData.clear()
-            result.details.forEach {
-                 listSubcategoryData.add(it)
-                 //Log.e("titltttt2",result.title)
-                Log.e("titlttt4444",listSubcategoryData.size.toString())
-            }
-            listContentData[result.title] = listSubcategoryData
-            //Log.e("titltttt",result.title)
-            Log.e("titltttt33333",listSubcategoryData.size.toString())
-        }
-
-        Log.e("sdfsdfsdf", listContentData["Upcoming Movies"]!!.size.toString())
-
-        for ((key, value) in listContentData) {
-            Log.e("PrintValues1",key)
-            for (i in value.indices) {
-             Log.e("PrintValues2",value[i].toString())
-            }
-        }*/
-
-        // subContentadapter  = SubCategoryMovieAdapter(requireContext(), this)
 
         contentadapter = MovieAdapter(requireContext(), this)
         _binding.contentList.adapter = contentadapter
@@ -97,7 +74,7 @@ class FragmentAll : Fragment(), PagerAdapter.Interaction, MovieAdapter.Interacti
                 listPagerData.add(dataList.result[i].details[j])
             }
         }
-        Log.e("DATAsdasd32", listPagerData.size.toString())
+
         adapter = PagerAdapter(requireContext(), this)
         _binding.movieListSlider.adapter = adapter
         _binding.movieListSlider.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -107,6 +84,12 @@ class FragmentAll : Fragment(), PagerAdapter.Interaction, MovieAdapter.Interacti
     }
 
     override fun onItemSelected(position: Int, item: Detail) {
-        // Toast.makeText(requireContext(),item,Toast.LENGTH_SHORT).s
+        Toast.makeText(requireContext(), "" + item.title, Toast.LENGTH_SHORT).show()
+        findNavController().navigate(R.id.detailFragment)
+    }
+
+    override fun onItemSelectedHorizontal(position: Int, item: Detail) {
+        Toast.makeText(requireContext(), "" + item.title, Toast.LENGTH_SHORT).show()
+        findNavController().navigate(R.id.detailFragment)
     }
 }
