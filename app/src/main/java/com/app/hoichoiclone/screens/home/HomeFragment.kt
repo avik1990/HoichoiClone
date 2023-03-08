@@ -18,7 +18,7 @@ import com.app.hoichoiclone.utility.Utils.addChildFragment
 import com.app.hoichoiclone.utility.customviews.tabs.NavigationOption
 import com.app.hoichoiclone.utility.customviews.tabs.TabAdapter
 
-class HomeFragment : Fragment(), TabAdapter.Interaction {
+class HomeFragment : Fragment(), TabAdapter.TabInteraction {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -36,7 +36,7 @@ class HomeFragment : Fragment(), TabAdapter.Interaction {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        // tabs
+        // /tabs
         adapter = TabAdapter(requireContext(), this)
         _binding?.navigationRecyclerView?.adapter = adapter
         _binding?.navigationRecyclerView?.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
@@ -53,7 +53,6 @@ class HomeFragment : Fragment(), TabAdapter.Interaction {
 
     private fun initRecyclerView(context: Context, page: String) {
         val navigationOptions = NavigationOption.initNavigationOptions(context, page)
-        //  mBinding?.appBarMain?.screenText?.text = if (isInitialy) "" else navigationOptions.first().text
         adapter.submitList(navigationOptions)
         adapter.notifyDataSetChanged()
     }

@@ -7,7 +7,7 @@
             type="com.app.hoichoiclone.utility.customviews.tabs.NavigationOption" />
         <variable
             name="clickEvent"
-            type="com.app.hoichoiclone.utility.customviews.tabs.TabAdapter.Interaction"/>
+            type="com.app.hoichoiclone.utility.customviews.tabs.TabAdapter.TabInteraction"/>
         <variable
             name="position"
             type="Integer" />

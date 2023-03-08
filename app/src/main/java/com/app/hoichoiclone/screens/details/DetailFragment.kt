@@ -2,6 +2,7 @@ package com.app.hoichoiclone.screens.details
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.Context
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,14 +13,23 @@ import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.hoichoiclone.R
 import com.app.hoichoiclone.databinding.FragmentDetailBinding
+import com.app.hoichoiclone.screens.details.seasonstab.SeasonListFragment
+import com.app.hoichoiclone.screens.details.seasonstab.model.SeasonModel
+import com.app.hoichoiclone.utility.Utils.addChildFragment
+import com.app.hoichoiclone.utility.customviews.tabs.NavigationOption
+import com.app.hoichoiclone.utility.customviews.tabs.TabAdapter
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
-import com.google.android.exoplayer2.upstream.DataSource
 import com.google.android.exoplayer2.util.MimeTypes
+import com.google.gson.Gson
+import java.io.BufferedReader
+import java.io.InputStream
+import java.io.InputStreamReader
 
-class DetailFragment : Fragment() {
+class DetailFragment : Fragment(), TabAdapter.TabInteraction {
 
     companion object {
         fun newInstance() = DetailFragment()
@@ -33,20 +43,24 @@ class DetailFragment : Fragment() {
         const val STATE_PLAYER_PLAYING = "playerOnPlay"
     }
 
+    // lateinit var adapter: SeasonTabAdapter
+    private lateinit var adapter: TabAdapter
+    private var previousSelect = 0
+
     private lateinit var exoFullScreenIcon: ImageView
     private lateinit var exoFullScreenBtn: FrameLayout
-    private lateinit var mainFrameLayout: FrameLayout
+    var listTabs: MutableList<NavigationOption> = ArrayList()
 
     private lateinit var exoPlayer: SimpleExoPlayer
     private lateinit var viewModel: DetailViewModel
     private lateinit var _binding: FragmentDetailBinding
-    private lateinit var dataSourceFactory: DataSource.Factory
 
     private var fullscreenDialog: Dialog? = null
     private var currentWindow = 0
     private var playbackPosition: Long = 0
     private var isFullscreen = false
     private var isPlayerPlaying = true
+
     private val mediaItem = MediaItem.Builder()
         .setUri(HLS_STATIC_URL)
         .setMimeType(MimeTypes.APPLICATION_MP4)
@@ -58,15 +72,65 @@ class DetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentDetailBinding.inflate(inflater, container, false)
+
         return _binding.root
+    }
+
+    private fun initRecyclerView(context: Context, page: String) {
+
+        val gson = Gson()
+        val i: InputStream = requireActivity().assets.open("seasonlists.json")
+        val br = BufferedReader(InputStreamReader(i))
+        val dataList: SeasonModel = gson.fromJson(br, SeasonModel::class.java)
+
+        listTabs.clear()
+        for (i in 0 until dataList.seasons.size) {
+            listTabs.add(NavigationOption(id = (i + 1), text = dataList.seasons[i].name))
+        }
+
+        adapter.submitList(listTabs)
+        adapter.notifyDataSetChanged()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this)[DetailViewModel::class.java]
 
-        exoFullScreenBtn = _binding.playerView.findViewById(R.id.exo_fullscreen_button)
-        exoFullScreenIcon = _binding.playerView.findViewById(R.id.exo_fullscreen_icon)
+        // /tabs
+        adapter = TabAdapter(requireContext(), this)
+        _binding?.navigationRecyclerView?.adapter = adapter
+        _binding?.navigationRecyclerView?.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        initRecyclerView(requireContext(), "Home")
+        // /
+
+        // /load the initial fragment
+        val fieldFragment = SeasonListFragment()
+        val bundle = Bundle()
+        bundle.putInt(SeasonListFragment.ARG_POSITION, 0)
+        fieldFragment.arguments = bundle
+        addChildFragment(fieldFragment, R.id.nav_host_fragment)
+        // /////////////
+       /* _binding.tabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) {
+
+                val fieldFragment = SeasonListFragment()
+                val bundle = Bundle()
+                bundle.putInt(SeasonListFragment.ARG_POSITION, tab.position)
+                fieldFragment.arguments = bundle
+                addChildFragment(fieldFragment, R.id.nav_host_fragment)
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab) {
+               // tab.view.setBackgroundColor(Color.TRANSPARENT)
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab) {
+
+            }
+        })*/
+
+        exoFullScreenBtn = _binding?.playerView?.findViewById(R.id.exo_fullscreen_button)!!
+        exoFullScreenIcon = _binding?.playerView?.findViewById(R.id.exo_fullscreen_icon)!!
 
         initFullScreenDialog()
         initFullScreenButton()
@@ -181,5 +245,20 @@ class DetailFragment : Fragment() {
         )
         isFullscreen = false
         fullscreenDialog?.dismiss()
+    }
+
+    override fun onItemSelected(position: Int, item: NavigationOption) {
+        if (previousSelect != position) {
+            adapter.currentItemSelected = position
+            adapter.notifyItemChanged(position)
+            adapter.notifyItemChanged(previousSelect)
+
+            val fieldFragment = SeasonListFragment()
+            val bundle = Bundle()
+            bundle.putInt(SeasonListFragment.ARG_POSITION, position)
+            fieldFragment.arguments = bundle
+            addChildFragment(fieldFragment, R.id.nav_host_fragment)
+        }
+        previousSelect = position
     }
 }
