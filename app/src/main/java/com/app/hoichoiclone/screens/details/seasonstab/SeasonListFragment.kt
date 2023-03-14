@@ -12,10 +12,11 @@ import com.app.hoichoiclone.screens.details.seasonstab.adapter.SeasonAdapter
 import com.app.hoichoiclone.screens.details.seasonstab.model.SeasonModel
 import com.app.hoichoiclone.screens.details.seasonstab.model.Video
 import com.google.gson.Gson
+import dagger.hilt.android.AndroidEntryPoint
 import java.io.BufferedReader
 import java.io.InputStream
 import java.io.InputStreamReader
-
+@AndroidEntryPoint
 class SeasonListFragment : Fragment(), SeasonAdapter.Interaction {
 
     private var position: Int = 0

@@ -17,7 +17,9 @@ import com.app.hoichoiclone.screens.home.modules.watchlist.WatchlistFragment
 import com.app.hoichoiclone.utility.Utils.addChildFragment
 import com.app.hoichoiclone.utility.customviews.tabs.NavigationOption
 import com.app.hoichoiclone.utility.customviews.tabs.TabAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : Fragment(), TabAdapter.TabInteraction {
 
     private var _binding: FragmentHomeBinding? = null

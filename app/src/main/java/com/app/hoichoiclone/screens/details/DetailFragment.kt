@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.hoichoiclone.R
 import com.app.hoichoiclone.databinding.FragmentDetailBinding
+import com.app.hoichoiclone.screens.comments.CommentFragment
 import com.app.hoichoiclone.screens.details.seasonstab.SeasonListFragment
 import com.app.hoichoiclone.screens.details.seasonstab.model.SeasonModel
 import com.app.hoichoiclone.utility.Utils.addChildFragment
@@ -25,10 +26,11 @@ import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.util.MimeTypes
 import com.google.gson.Gson
+import dagger.hilt.android.AndroidEntryPoint
 import java.io.BufferedReader
 import java.io.InputStream
 import java.io.InputStreamReader
-
+@AndroidEntryPoint
 class DetailFragment : Fragment(), TabAdapter.TabInteraction {
 
     companion object {
@@ -134,12 +136,20 @@ class DetailFragment : Fragment(), TabAdapter.TabInteraction {
 
         initFullScreenDialog()
         initFullScreenButton()
+        initCommentLayout()
 
         if (savedInstanceState != null) {
             currentWindow = savedInstanceState.getInt(STATE_RESUME_WINDOW)
             playbackPosition = savedInstanceState.getLong(STATE_RESUME_POSITION)
             isFullscreen = savedInstanceState.getBoolean(STATE_PLAYER_FULLSCREEN)
             isPlayerPlaying = savedInstanceState.getBoolean(STATE_PLAYER_PLAYING)
+        }
+    }
+
+    private fun initCommentLayout() {
+        _binding.layoutComment.cardComment.setOnClickListener {
+            val sheet = CommentFragment()
+            sheet.show(childFragmentManager, "CommentFragment")
         }
     }
 

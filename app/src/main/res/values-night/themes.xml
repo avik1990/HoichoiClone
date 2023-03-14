@@ -25,4 +25,15 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">@dimen/_4sdp</item>
     </style>
+    <style name="Style.App.circleImageView" parent="">
+        <item name="shapeAppearance">@style/ShapeAppearanceOverlay.App.circleImageView</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.App.circleImageView" parent="">
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSize">50%</item>
+    </style>
+    <style name="superBottomSheetDialog" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+    </style>
 </resources>

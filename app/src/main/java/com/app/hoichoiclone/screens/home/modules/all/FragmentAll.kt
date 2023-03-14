@@ -17,10 +17,11 @@ import com.app.hoichoiclone.screens.home.modules.all.adapter.PagerAdapter
 import com.app.hoichoiclone.screens.home.modules.all.model.Detail
 import com.app.hoichoiclone.screens.home.modules.all.model.MoviesDataModel
 import com.google.gson.Gson
+import dagger.hilt.android.AndroidEntryPoint
 import java.io.BufferedReader
 import java.io.InputStream
 import java.io.InputStreamReader
-
+@AndroidEntryPoint
 class FragmentAll : Fragment(), PagerAdapter.Interaction, MovieAdapter.Interaction {
 
     companion object {

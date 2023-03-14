@@ -19,7 +19,7 @@
     <LinearLayout
         android:layout_width="@dimen/_130sdp"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_3sdp"
+        android:layout_margin="@dimen/_2sdp"
         android:onClick="@{()->clickEvent.onItemSelected(position,navigationItem)}"
         android:orientation="vertical"
         android:background="#000000">
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:textColor="@color/white"
-            android:layout_marginTop="@dimen/_3sdp"
+            android:layout_marginTop="@dimen/_2sdp"
             android:text="@{navigationItem.title}"
             android:textSize="@dimen/_12sdp" />
 
@@ -48,7 +48,7 @@
             android:gravity="center_vertical"
             android:textColor="@color/grey"
             android:maxLines="4"
-            android:layout_marginTop="@dimen/_3sdp"
+            android:layout_marginTop="@dimen/_2sdp"
             android:text="@{navigationItem.description}"
             android:textSize="@dimen/_7sdp" />
     </LinearLayout>

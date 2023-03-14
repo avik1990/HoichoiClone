@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="navigationItem"
+            type="com.app.hoichoiclone.screens.comments.commentlist.model.Comment" />
+        <variable
+            name="clickEvent"
+            type="com.app.hoichoiclone.screens.comments.commentlist.adapter.CommentAdapter.Interaction"/>
+        <variable
+            name="position"
+            type="Integer" />
+        <variable
+            name="checked"
+            type="Boolean" />
+    </data>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12sdp"
+            android:text="@{navigationItem.comment}"
+            android:background="@android:color/black" />
+    </LinearLayout>
+    </layout>
+

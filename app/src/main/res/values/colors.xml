@@ -10,7 +10,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#a5a6aa</color>
     <color name="red">#FF0000</color>
-
+    <color name="lightblack">#303030</color>
 
 
 </resources>
