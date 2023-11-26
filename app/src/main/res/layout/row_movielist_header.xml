@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="navigationItem"
+            type="com.app.hoichoiclone.screens.home.modules.all.model.Result" />
+        <variable
+            name="clickEvent"
+            type="com.app.hoichoiclone.screens.home.modules.all.adapter.MovieAdapter.Interaction"/>
+        <variable
+            name="position"
+            type="Integer" />
+        <variable
+            name="checked"
+            type="Boolean" />
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_3sdp"
+        android:orientation="vertical"
+        android:background="#000000">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="@{navigationItem.title}"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="@dimen/_3sdp"
+            android:textSize="@dimen/_12sdp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listSubCatItem"
+            android:layout_width="match_parent"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:layout_height="wrap_content">
+        </androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
+</layout>

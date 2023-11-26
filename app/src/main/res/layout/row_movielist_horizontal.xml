@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="navigationItem"
+            type="com.app.hoichoiclone.screens.home.modules.all.model.Detail" />
+        <variable
+            name="position"
+            type="Integer" />
+        <variable
+            name="checked"
+            type="Boolean" />
+        <variable
+            name="clickEvent"
+            type="com.app.hoichoiclone.screens.home.modules.all.adapter.ChildAdapter.Interaction"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="@dimen/_90sdp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_3sdp"
+        android:onClick="@{()->clickEvent.onItemSelected(position,navigationItem)}"
+        android:orientation="vertical"
+        android:background="#000000">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/movieBanner"
+            android:layout_width="@dimen/_90sdp"
+            android:scaleType="fitXY"
+            app:shapeAppearanceOverlay="@style/roundedCorners"
+            android:layout_height="@dimen/_100sdp"/>
+
+        <TextView
+            android:id="@+id/movieTitle"
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            android:singleLine="true"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:text="@{navigationItem.title}"
+            android:textSize="@dimen/_10sdp" />
+    </LinearLayout>
+</layout>
+

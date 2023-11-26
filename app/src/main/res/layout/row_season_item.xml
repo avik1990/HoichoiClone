@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="navigationItem"
+            type="com.app.hoichoiclone.screens.details.seasonstab.model.Video" />
+        <variable
+            name="position"
+            type="Integer" />
+        <variable
+            name="checked"
+            type="Boolean" />
+        <variable
+            name="clickEvent"
+            type="com.app.hoichoiclone.screens.details.seasonstab.adapter.SeasonAdapter.Interaction"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="@dimen/_130sdp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_2sdp"
+        android:onClick="@{()->clickEvent.onItemSelected(position,navigationItem)}"
+        android:orientation="vertical"
+        android:background="#000000">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/movieBanner"
+            android:layout_width="@dimen/_130sdp"
+            android:scaleType="fitXY"
+            app:shapeAppearanceOverlay="@style/roundedCorners"
+            android:layout_height="@dimen/_110sdp"/>
+
+        <TextView
+            android:id="@+id/movieTitle"
+            android:layout_width="@dimen/_130sdp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:text="@{navigationItem.title}"
+            android:textSize="@dimen/_12sdp" />
+
+        <TextView
+            android:id="@+id/movieDesc"
+            android:layout_width="@dimen/_130sdp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:textColor="@color/grey"
+            android:maxLines="4"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:text="@{navigationItem.description}"
+            android:textSize="@dimen/_7sdp" />
+    </LinearLayout>
+</layout>
+

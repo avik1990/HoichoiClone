@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.app.hoichoiclone.screens.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.app.hoichoiclone.screens.search.SearchFragment"
+        android:label="@string/search"
+        tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/downloadFragment"
+        android:name="com.app.hoichoiclone.screens.download.DownloadFragment"
+        android:label="@string/downloads"
+        tools:layout="@layout/fragment_download" />
+    <fragment
+        android:id="@+id/upcomingFragment"
+        android:name="com.app.hoichoiclone.screens.upcoming.UpcomingFragment"
+        android:label="@string/upcoming"
+        tools:layout="@layout/fragment_upcoming" />
+    <fragment
+        android:id="@+id/accountFragment"
+        android:name="com.app.hoichoiclone.screens.account.AccountFragment"
+        android:label="@string/account"
+        tools:layout="@layout/fragment_account" />
+
+    <fragment
+        android:id="@+id/allFragment"
+        android:name="com.app.hoichoiclone.screens.home.modules.all.FragmentAll"
+        android:label="@string/all"
+        tools:layout="@layout/fragment_all" >
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/movieFragment"
+        android:name="com.app.hoichoiclone.screens.home.modules.movies.MovieFragment"
+        android:label="@string/movies"
+        tools:layout="@layout/fragment_movie" />
+
+    <fragment
+        android:id="@+id/showFragment"
+        android:name="com.app.hoichoiclone.screens.home.modules.shows.ShowsFragment"
+        android:label="@string/shows"
+        tools:layout="@layout/fragment_shows" />
+
+    <fragment
+        android:id="@+id/watchFragment"
+        android:name="com.app.hoichoiclone.screens.home.modules.watchlist.WatchlistFragment"
+        android:label="@string/watchlist"
+        tools:layout="@layout/fragment_watchlist" />
+
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.app.hoichoiclone.screens.details.DetailFragment"
+        android:label="@string/detail"
+        tools:layout="@layout/fragment_detail" />
+
+</navigation>

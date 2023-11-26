@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@color/lightblack"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:padding="@dimen/_2sdp"
+        android:layout_margin="@dimen/_2sdp"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/proImage"
+            android:layout_width="@dimen/_30sdp"
+            android:src="@drawable/ic_avatar"
+            android:layout_height="@dimen/_30sdp"/>
+
+        <EditText
+            android:id="@+id/etComment"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:hint="Add a comment..."
+            android:textColorHint="@color/grey"
+            android:padding="@dimen/_3sdp"
+            android:background="@drawable/rounded_edittext"
+            android:textColor="@color/white"
+            android:layout_toRightOf="@+id/proImage"
+            android:layout_toLeftOf="@+id/ivPost"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:layout_height="@dimen/_25sdp"/>
+
+        <ImageView
+            android:id="@+id/ivPost"
+            android:layout_width="@dimen/_20sdp"
+            android:src="@drawable/ic_comment"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_height="@dimen/_20sdp"/>
+    </RelativeLayout>
+</LinearLayout>

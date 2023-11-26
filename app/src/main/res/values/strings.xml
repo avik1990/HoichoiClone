@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">HoichoiClone</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="home">Home</string>
+    <string name="search">Search</string>
+    <string name="downloads">Downloads</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="account">Account</string>
+
+    <string name="all">All</string>
+    <string name="movies">Movies</string>
+    <string name="shows">Shows</string>
+    <string name="watchlist">Watchlist</string>
+    <string name="detail">Detail</string>
+    <string name="just_now">Just Now</string>
+
+</resources>

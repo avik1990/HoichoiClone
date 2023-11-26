@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="navigationItem"
+            type="com.app.hoichoiclone.utility.customviews.tabs.NavigationOption" />
+        <variable
+            name="clickEvent"
+            type="com.app.hoichoiclone.utility.customviews.tabs.TabAdapter.TabInteraction"/>
+        <variable
+            name="position"
+            type="Integer" />
+        <variable
+            name="checked"
+            type="Boolean" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:padding="@dimen/_2sdp"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tvTabText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/_4sdp"
+            android:layout_marginTop="@dimen/_4sdp"
+            android:textColor="@color/white"
+            android:text="@{navigationItem.text}"
+            android:onClick="@{()->clickEvent.onItemSelected(position,navigationItem)}"
+            android:textSize="@dimen/_13sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/selectedView"
+            android:layout_width="@dimen/_12sdp"
+            android:layout_height="@dimen/_2sdp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:visibility="invisible"
+            android:layout_below="@+id/tvTabText"
+            android:background="#FF0000"
+            android:layout_marginStart="@dimen/_4sdp"
+            android:orientation="horizontal">
+        </LinearLayout>
+    </RelativeLayout>
+</layout>
