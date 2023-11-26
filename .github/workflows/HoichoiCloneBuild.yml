@@ -18,7 +18,10 @@ jobs:
           # The Java version to set up. Takes a whole or semver Java version. See examples of supported syntax in README file
           java-version: '17'
           distribution: 'adopt'
-
+      
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+        
       - name: Build with Gradle
         run: ./gradlew build
 
